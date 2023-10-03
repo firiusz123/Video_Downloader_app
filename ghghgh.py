@@ -58,7 +58,7 @@ list_frame = tk.Frame(window,bg='#272B2A')
 list_frame.pack()
 
 # Create a Listbox widget for the list
-listbox = tk.Listbox(list_frame, selectmode=tk.SINGLE, height=8 ,bg='#272B2A')
+listbox = tk.Listbox(list_frame, selectmode=tk.SINGLE, height=8 ,bg='#6E6B62')
 for item in range(1, 20):
     listbox.insert(tk.END, f"Item {item}")
 listbox.pack(side=tk.LEFT)
@@ -80,7 +80,7 @@ listbox.config(yscrollcommand=scrollbar.set)
 scrollbar.config(command=listbox.yview)
 
 #creating empty label for a spacing 
-empty_label = tk.Label(window,height=10,bg="#272B2A")
+empty_label = tk.Label(window,height=4,bg="#272B2A")
 empty_label.pack()
 
 
