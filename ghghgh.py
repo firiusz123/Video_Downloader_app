@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
-
+from pytube import YouTube
 # Create a Tkinter window
 window = tk.Tk()
 window.title("YouTube downloader")
@@ -13,7 +13,11 @@ def on_select(event):
 
 def search_for_video():
     entered_text = entry.get()
-    label.config(text="You entered: " + entered_text)
+    try:
+        yt = YouTube(entered_text)
+        label.config(text="The video title: " + yt.title)
+    except:
+        label.config(text="wrong link, try again :(")
 
 def open_folder_dialog():
     folder_path = filedialog.askdirectory()
@@ -52,10 +56,16 @@ button.pack(pady = 10)
 
 
 
+
+
 # Create a Listbox widget for the list
 list_frame = tk.Frame(window,bg='#272B2A')
 
 list_frame.pack()
+
+label_choose = tk.Label(list_frame, text="Pick Video Resolution" , fg='#ACAFC2')
+label_choose.configure(bg="#272B2A" ,height=1 )
+label_choose.pack(side=tk.TOP, pady=20)
 
 # Create a Listbox widget for the list
 listbox = tk.Listbox(list_frame, selectmode=tk.SINGLE, height=8 ,bg='#6E6B62')
@@ -68,9 +78,12 @@ download_button=tk.Button(list_frame, bg='#6E6B62' , text='Download the resoluti
 download_button.pack(side=tk.RIGHT,padx=50)
 
 
+
 # Create a vertical scrollbar
 scrollbar = tk.Scrollbar(list_frame, orient=tk.VERTICAL,highlightbackground='#6E6B62',background='#6E6B62')
 scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+
 
 
 
