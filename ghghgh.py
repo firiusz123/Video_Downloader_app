@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import filedialog
 
 # Create a Tkinter window
 window = tk.Tk()
@@ -9,6 +10,17 @@ def on_select(event):
     selected_index = listbox.curselection()
     if selected_index:
         selected_text.set(listbox.get(selected_index))
+
+def search_for_video():
+    entered_text = entry.get()
+    label.config(text="You entered: " + entered_text)
+
+def open_folder_dialog():
+    folder_path = filedialog.askdirectory()
+    if folder_path:
+        label2.configure(text=folder_path)
+
+
 
 
 
@@ -35,14 +47,14 @@ label.pack()
 entry = tk.Entry(window,width=40,bg='#6E6B62')
 entry.pack()
 #creating a search  button 
-button = tk.Button(window, bg='#6E6B62' , text='search for ',fg='black')
+button = tk.Button(window, bg='#6E6B62' , text='search for ',fg='black',command=search_for_video)
 button.pack(pady = 10)
 
 
 
 # Create a Listbox widget for the list
-list_frame = tk.Frame(window)
-list_frame.configure(bg='#272B2A')
+list_frame = tk.Frame(window,bg='#272B2A')
+
 list_frame.pack()
 
 # Create a Listbox widget for the list
@@ -57,7 +69,7 @@ download_button.pack(side=tk.RIGHT,padx=50)
 
 
 # Create a vertical scrollbar
-scrollbar = tk.Scrollbar(list_frame, orient=tk.VERTICAL)
+scrollbar = tk.Scrollbar(list_frame, orient=tk.VERTICAL,highlightbackground='#6E6B62',background='#6E6B62')
 scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
 
@@ -80,12 +92,12 @@ label1 = tk.Label(window, text="The download folder is:" , fg='#ACAFC2')
 label1.configure(bg="#272B2A" ,height=1 )
 label1.pack()
 # a label that should print out the current directory 
-label2 = tk.Label(window, text="gay" , fg='#ACAFC2')
+label2 = tk.Label(window, text="NONE" , fg='#ACAFC2')
 label2.configure(bg="#272B2A" ,height=1 )
 label2.pack()
 
-download_button=tk.Button(window, bg='#6E6B62' , text='Change Folder ',fg='black')
-download_button.pack()
+folder_button=tk.Button(window, bg='#6E6B62' , text='Change Folder ',fg='black',command=open_folder_dialog)
+folder_button.pack()
 
 
 
