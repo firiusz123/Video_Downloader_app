@@ -6,18 +6,31 @@ window = tk.Tk()
 window.title("YouTube downloader")
 
 
+
+
+
 def on_select(event):
     selected_index = listbox.curselection()
     if selected_index:
         selected_text.set(listbox.get(selected_index))
+def fill_listbox(resolutions):
+    for item in resolutions:
+        listbox.insert(tk.END,  item)
+        
 
 def search_for_video():
+    resolution=[]
     entered_text = entry.get()
     try:
         yt = YouTube(entered_text)
         label.config(text="The video title: " + yt.title)
+        streams= yt.streams.filter(file_extension='mp4', progressive=True)
+        for stream in streams:
+            resolution.append(stream.resolution)
+        fill_listbox(resolutions=resolution)
+       
     except:
-        label.config(text="wrong link, try again :(")
+        label.config(text="wrong link, try again :(" , foreground='red')
 
 def open_folder_dialog():
     folder_path = filedialog.askdirectory()
@@ -69,8 +82,6 @@ label_choose.pack(side=tk.TOP, pady=20)
 
 # Create a Listbox widget for the list
 listbox = tk.Listbox(list_frame, selectmode=tk.SINGLE, height=8 ,bg='#6E6B62')
-for item in range(1, 20):
-    listbox.insert(tk.END, f"Item {item}")
 listbox.pack(side=tk.LEFT)
 
 # making a download button

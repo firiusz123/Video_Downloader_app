@@ -1,19 +1,36 @@
 import tkinter as tk
 from tkinter import filedialog
-
+from pytube import YouTube
 # Create a Tkinter window
 window = tk.Tk()
 window.title("YouTube downloader")
+
+
+
 
 
 def on_select(event):
     selected_index = listbox.curselection()
     if selected_index:
         selected_text.set(listbox.get(selected_index))
+def fill_listbox(resolutions):
+    for item in resolutions:
+        listbox.insert(tk.END,  item)
+        
 
 def search_for_video():
+    resolution=[]
     entered_text = entry.get()
-    label.config(text="You entered: " + entered_text)
+    try:
+        yt = YouTube(entered_text)
+        label.config(text="The video title: " + yt.title)
+        streams= yt.streams.filter(file_extension='mp4', progressive=True)
+        for stream in streams:
+            resolution.append(stream.resolution)
+        fill_listbox(resolutions=resolution)
+       
+    except:
+        label.config(text="wrong link, try again :(" , foreground='red')
 
 def open_folder_dialog():
     folder_path = filedialog.askdirectory()
@@ -52,20 +69,25 @@ button.pack(pady = 10)
 
 
 
+
+
 # Create a Listbox widget for the list
 list_frame = tk.Frame(window,bg='#272B2A')
 
 list_frame.pack()
 
+label_choose = tk.Label(list_frame, text="Pick Video Resolution" , fg='#ACAFC2')
+label_choose.configure(bg="#272B2A" ,height=1 )
+label_choose.pack(side=tk.TOP, pady=20)
+
 # Create a Listbox widget for the list
-listbox = tk.Listbox(list_frame, selectmode=tk.SINGLE, height=8 ,bg='#272B2A')
-for item in range(1, 20):
-    listbox.insert(tk.END, f"Item {item}")
+listbox = tk.Listbox(list_frame, selectmode=tk.SINGLE, height=8 ,bg='#6E6B62')
 listbox.pack(side=tk.LEFT)
 
 # making a download button
 download_button=tk.Button(list_frame, bg='#6E6B62' , text='Download the resolution ',fg='black')
 download_button.pack(side=tk.RIGHT,padx=50)
+
 
 
 # Create a vertical scrollbar
@@ -75,12 +97,14 @@ scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
 
 
+
+
 # Connect the Listbox and Scrollbar
 listbox.config(yscrollcommand=scrollbar.set)
 scrollbar.config(command=listbox.yview)
 
 #creating empty label for a spacing 
-empty_label = tk.Label(window,height=10,bg="#272B2A")
+empty_label = tk.Label(window,height=4,bg="#272B2A")
 empty_label.pack()
 
 
