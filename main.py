@@ -15,7 +15,7 @@ def on_select(event):
     selected_index = listbox.curselection()
     if selected_index:
         selected_text.set(listbox.get(selected_index))
-        print(selected_text.set(listbox.get(selected_index)))
+        
 def fill_listbox(resolutions):
     for item in resolutions:
         listbox.insert(tk.END,  item)
