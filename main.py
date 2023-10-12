@@ -4,6 +4,8 @@ from pytube import YouTube
 # Create a Tkinter window
 window = tk.Tk()
 window.title("YouTube downloader")
+folder_path=''
+
 
 
 
@@ -13,6 +15,7 @@ def on_select(event):
     selected_index = listbox.curselection()
     if selected_index:
         selected_text.set(listbox.get(selected_index))
+        print(selected_text.set(listbox.get(selected_index)))
 def fill_listbox(resolutions):
     for item in resolutions:
         listbox.insert(tk.END,  item)
@@ -23,7 +26,7 @@ def search_for_video():
     entered_text = entry.get()
     try:
         yt = YouTube(entered_text)
-        label.config(text="The video title: " + yt.title)
+        label.config(text="The video title: " + yt.title , foreground='#ACAFC2')
         streams= yt.streams.filter(file_extension='mp4', progressive=True)
         for stream in streams:
             resolution.append(stream.resolution)
@@ -33,10 +36,22 @@ def search_for_video():
         label.config(text="wrong link, try again :(" , foreground='red')
 
 def open_folder_dialog():
+    global folder_path
     folder_path = filedialog.askdirectory()
     if folder_path:
         label2.configure(text=folder_path)
-
+def download_function():
+    selected_item = listbox.get(listbox.curselection())
+    entered_text = entry.get()
+    yt = YouTube(entered_text)
+    label.config(text="The video title: " + yt.title)
+    streams= yt.streams.filter(file_extension='mp4', progressive=True ,res=selected_item)
+    tag = streams[0].itag
+    stream = yt.streams.get_by_itag(tag)
+    try:
+        stream.download(output_path=folder_path)
+    except:
+        print('some shit is wrong')
 
 
 
@@ -85,7 +100,7 @@ listbox = tk.Listbox(list_frame, selectmode=tk.SINGLE, height=8 ,bg='#6E6B62')
 listbox.pack(side=tk.LEFT)
 
 # making a download button
-download_button=tk.Button(list_frame, bg='#6E6B62' , text='Download the resolution ',fg='black')
+download_button=tk.Button(list_frame, bg='#6E6B62' , text='Download the resolution ',fg='black',command=download_function)
 download_button.pack(side=tk.RIGHT,padx=50)
 
 
