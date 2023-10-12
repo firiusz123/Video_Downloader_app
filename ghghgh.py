@@ -26,7 +26,7 @@ def search_for_video():
     entered_text = entry.get()
     try:
         yt = YouTube(entered_text)
-        label.config(text="The video title: " + yt.title)
+        label.config(text="The video title: " + yt.title , foreground='#ACAFC2')
         streams= yt.streams.filter(file_extension='mp4', progressive=True)
         for stream in streams:
             resolution.append(stream.resolution)
@@ -36,6 +36,7 @@ def search_for_video():
         label.config(text="wrong link, try again :(" , foreground='red')
 
 def open_folder_dialog():
+    global folder_path
     folder_path = filedialog.askdirectory()
     if folder_path:
         label2.configure(text=folder_path)
