@@ -8,4 +8,5 @@ how to use diy:
 3. Use a change folder button to change a directory from NONE to what directory you want to save your video at
 4. click at the resolution you want to download and click the download button
 
-![image](https://github.com/firiusz123/Video_Downloader_app/assets/45881190/72dfeaaf-a583-428d-ba6e-2fd340e37368)
+![image](https://github.com/firiusz123/Video_Downloader_app/assets/45881190/4aeecb71-ba5d-423f-9a2c-0afe676da757)
+
